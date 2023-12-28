@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
-
+import { BaseEntity } from 'src/entities/base.entity'
 @Entity()
-export class User {
+export class User extends BaseEntity  {
   //自增列
   @PrimaryGeneratedColumn()
   id: number

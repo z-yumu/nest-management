@@ -19,18 +19,21 @@ export class UserService {
     return this.user.save(data)
   }
 
-  async findAll(query: QueryType) {
-  
-    const data = await this.user.find({
-      where: {
-        nickName: Like(`%${query.nickName}%`),
-      },
-      order: {
-        id: 'DESC',
-      },
-      skip: (query.page - 1) * query.pageSize,
-      take: query.pageSize
-    })
+  async findAll() {
+    // query: QueryType
+    // const data = await this.user.find({
+    //   where: {
+    //     nickName: Like(`%${query.nickName}%`),
+    //   },
+    //   order: {
+    //     id: 'DESC',
+    //   },
+    //   skip: (query.page - 1) * query.pageSize,
+    //   take: query.pageSize
+    // })
+    // return {
+    //   data
+    // }
   }
 
   findOne(id: number) {
