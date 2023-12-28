@@ -16,6 +16,7 @@ export class UserService {
     const data = new User()
     data.nickName = createUserDto.nickName
     data.password = createUserDto.password
+    data.account = createUserDto.account
     return this.user.save(data)
   }
 
