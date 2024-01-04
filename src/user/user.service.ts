@@ -5,36 +5,48 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { User } from './entities/user.entity'
 import { Like, Repository } from 'typeorm'
 import { Pagination } from 'src/common/dto'
+import { isEmpty } from 'class-validator'
 
-type QueryType = CreateUserDto & Pagination
+// 搜索时候都变成可选
+export type QueryType = Partial<CreateUserDto> & Pagination
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly user: Repository<User>,
   ) {}
-  create(createUserDto: CreateUserDto) {
+  async create(createUserData: CreateUserDto) {
+    // 看用户账号是否已存在
+    const { nickName, password, account } = createUserData
+    const arr = await this.user.find({
+      where: {
+        account
+      },
+    })
+    console.log(arr,'isExist')
+    if(!isEmpty(arr)) return console.log('账号已存在')
     const data = new User()
-    data.nickName = createUserDto.nickName
-    data.password = createUserDto.password
-    data.account = createUserDto.account
+    data.nickName = nickName
+    data.password = password
+    data.account = account
     return this.user.save(data)
   }
 
-  async findAll() {
-    // query: QueryType
-    // const data = await this.user.find({
-    //   where: {
-    //     nickName: Like(`%${query.nickName}%`),
-    //   },
-    //   order: {
-    //     id: 'DESC',
-    //   },
-    //   skip: (query.page - 1) * query.pageSize,
-    //   take: query.pageSize
-    // })
-    // return {
-    //   data
-    // }
+  async findAll(query: QueryType) {
+    console.log(query,'query')
+    const data = await this.user.find({
+      where: {
+        // nickName: Like(`%${query.nickName}%`),
+        account:Like(`%${query.account}%`),
+      },
+      order: {
+        id: 'DESC',
+      },
+      skip: (query.page - 1) * query.pageSize,
+      take: query.pageSize,
+    })
+    return {
+      data,
+    }
   }
 
   findOne(id: number) {

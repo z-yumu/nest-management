@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-
-import { IsString,IsNotEmpty } from 'class-validator'
+import { IsString,IsNotEmpty,IsInt  } from 'class-validator'
 
 /**
  * 为什么不直接使用实体类型user.entiry，而是又定义一个 CreateUserDto
@@ -25,5 +24,17 @@ export class CreateUserDto{
 
 }
 
+// 查询修改删除 批量删除
+export class QueryDelUserDto{
+
+    @IsNotEmpty()
+    @IsInt()
+    @ApiProperty({description:'user id',required:true})
+    id:number
+
+    @IsNotEmpty()
+    @ApiProperty({description:'user ids',required:false})
+    ids?:number[]
+}
 
 

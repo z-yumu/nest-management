@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-// import { VersioningType } from '@nestjs/common'
+import { ValidationPipe } from '@nestjs/common'
 
 
 (async() => {
@@ -13,6 +13,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
   // app.enableVersioning({
   //   type: VersioningType.URI,
   // })
+  app.useGlobalPipes(new ValidationPipe()) // 全局管道
   await app.listen(8848)
 })()
 

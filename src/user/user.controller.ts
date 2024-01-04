@@ -1,38 +1,46 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common'
-import { UserService } from './user.service'
-import { CreateUserDto } from './dto/create-user.dto'
+import { Controller, Post, Body, Param } from '@nestjs/common'
+import { QueryType, UserService } from './user.service'
+import { CreateUserDto, QueryDelUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger'
+// UsePipes是类转换
+import { ParseIntPipe } from '@nestjs/common'
+// 全都用post吧
 
 @Controller('user')
-@ApiTags('user')
+@ApiTags('user') // ApiTags整个模块的说明
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  @ApiOperation({summary:"add user",description:"test"})
+  @Post('addUser')
+  @ApiOperation({ summary: 'add user', description: 'add user' })
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto)
   }
 
-  @Get()
-  @ApiQuery({name:"xxxx",description:"bbb"})
-  findAll() {
-    return this.userService.findAll()
+  @Post('queryUserList')
+  @ApiOperation({ summary: 'find all user' })
+  findAll(@Body() body: QueryType) {
+    return this.userService.findAll(body)
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Post('findOneUser')
+  @ApiOperation({ summary: 'find one user' })
+  findOne(@Body() body: QueryDelUserDto) {
+    const { id } = body
     return this.userService.findOne(+id)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  @Post('updateUser')
+  @ApiOperation({ summary: 'update user', description: 'update user' })
+  update(@Body() id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto)
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Post('delUser')
+  @ApiOperation({ summary: 'del user' })
+  remove(@Body() body: QueryDelUserDto) {
+    const { id } = body
     return this.userService.remove(+id)
   }
 }

@@ -1,4 +1,4 @@
 export class Pagination {
-    page:number
-    pageSize:number
+    page?:number = 1
+    pageSize?:number = 10
 }
