@@ -5,7 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { User } from './entities/user.entity'
 import { Like, Repository } from 'typeorm'
 import { Pagination } from 'src/common/dto'
-import { isEmpty } from 'class-validator'
+import { isEmpty } from 'lodash'
+import { ApiException } from 'src/common/exceptions/api.exception'
 
 // 搜索时候都变成可选
 export type QueryType = Partial<CreateUserDto> & Pagination
@@ -23,7 +24,7 @@ export class UserService {
       },
     })
     console.log(arr,'isExist')
-    if(!isEmpty(arr)) return console.log('账号已存在')
+    if(!isEmpty(arr)) throw new ApiException(10004)
     const data = new User()
     data.nickName = nickName
     data.password = password

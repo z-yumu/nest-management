@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ValidationPipe } from '@nestjs/common'
+import { TransformInterceptor } from './common/transform.interceptor'
+import { HttpExceptionFilter } from './common/http-exception.filter'
 
 
 (async() => {
@@ -13,7 +15,11 @@ import { ValidationPipe } from '@nestjs/common'
   // app.enableVersioning({
   //   type: VersioningType.URI,
   // })
-  app.useGlobalPipes(new ValidationPipe()) // 全局管道
+  app.useGlobalFilters(new HttpExceptionFilter()) // 异常返回格式
+  app.useGlobalInterceptors(new TransformInterceptor()) // 成功返回格式
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true // 开启转换
+  }))
   await app.listen(8848)
 })()
 
