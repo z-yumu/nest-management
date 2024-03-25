@@ -4,10 +4,12 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ValidationPipe } from '@nestjs/common'
 import { TransformInterceptor } from './common/transform.interceptor'
 import { HttpExceptionFilter } from './common/http-exception.filter'
+import * as session from 'express-session'
 
 
 (async() => {
   const app = await NestFactory.create(AppModule)
+  app.use(session({ secret: "Rich_J", name: "rj.session", rolling: true, cookie: { maxAge: null } }))
   const options = new DocumentBuilder().setTitle('yum-docs').setDescription('apis-document').setVersion('1').build()
   const document = SwaggerModule.createDocument(app,options)
   SwaggerModule.setup('/api-docs',app,document)
