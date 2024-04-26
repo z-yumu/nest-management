@@ -23,9 +23,11 @@ export class UserController {
       height: 34, //高度
       background: '#cc9966', //背景颜色
     })
+    console.log(captcha,'captcha')
     req.session.code = captcha.text //存储验证码记录到session
-    res.type('image/svg+xml')
-    res.send(captcha.data)
+    return 'gg'
+    // res.type('image/svg+xml')
+    // res.send(captcha.data)
   }
 
   @Post('checkCode')
