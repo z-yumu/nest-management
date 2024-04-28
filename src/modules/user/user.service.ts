@@ -23,7 +23,7 @@ export class UserService {
         account
       },
     })
-    console.log(arr,'isExist')
+
     if(!isEmpty(arr)) throw new ApiException(10004)
     const data = new User()
     data.nickName = nickName
