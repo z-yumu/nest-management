@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Param, Res, Req } from '@nestjs/common'
+import { Controller, Post, Body, Param, Res, Req, UseGuards } from '@nestjs/common'
 import { QueryType, UserService } from './user.service'
 import { CreateUserDto, QueryDelUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
@@ -6,6 +6,7 @@ import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger'
 // UsePipes是类转换
 import { ParseIntPipe } from '@nestjs/common'
 import * as svgCaptcha from 'svg-captcha'
+import { AuthGuard } from '@nestjs/passport'
 // 全都用post吧
 
 @Controller('user')
@@ -59,6 +60,7 @@ export class UserController {
     return this.userService.findAll(body)
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('findOneUser')
   @ApiOperation({ summary: 'find one user' })
   findOne(@Body() body: QueryDelUserDto) {

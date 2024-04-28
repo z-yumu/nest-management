@@ -24,7 +24,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     const user = await this.userRepository
       .createQueryBuilder('user')
       .addSelect('user.password')
-      .where('user.username=:username', { nickName })
+      .where('user.nickName=:nickName', { nickName })
       .getOne()
 
     if (!user) throw new BadRequestException('用户不存在')
