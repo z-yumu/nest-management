@@ -5,9 +5,11 @@ import { UserModule } from './modules/user/user.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { UploadModule } from './modules/upload/upload.module'
 import { AuthModule } from './modules/auth/auth.module'
-import ormConfig from '../ormconfig'
+// import ormConfig from '../ormconfig'
 import envConfig from './config/envConfig'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config' // ConfigService是
+import { JwtAuthGuard } from './common/guard/jwt-auth.guard'
+import { APP_GUARD } from '@nestjs/core'
 
 @Module({
   imports: [
@@ -16,11 +18,33 @@ import { ConfigModule } from '@nestjs/config'
       envFilePath: [envConfig.path],
     }),
     UserModule,
-    TypeOrmModule.forRoot(ormConfig),
+    // TypeOrmModule.forRoot(ormConfig),
     UploadModule,
     AuthModule,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get<string>('DB_HOST') ?? 'localhost',
+        port: configService.get<number>('DB_PORT') ?? 3306,
+        username: configService.get<string>('DB_USERNAME') ?? 'root',
+        password: configService.get<string>('DB_PASSWORD') ?? '*******',
+        database: configService.get<string>('DB_DATABASE') ?? 'yum',
+        synchronize: true,
+        retryDelay: 500,
+        retryAttempts: 10,
+        autoLoadEntities: true,
+      }),
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}

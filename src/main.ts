@@ -24,6 +24,7 @@ import * as session from 'express-session'
     .setTitle('yum-docs')
     .setDescription('apis-document')
     .setVersion('1')
+    .addBearerAuth() // 添加认证
     .build()
   const document = SwaggerModule.createDocument(app, options)
   SwaggerModule.setup('/api-docs', app, document)
