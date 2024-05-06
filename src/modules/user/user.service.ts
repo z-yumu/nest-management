@@ -33,7 +33,7 @@ export class UserService {
   }
 
   async findAll(query: QueryType) {
-    console.log(query,'query')
+    // console.log(query,'query')
     const data = await this.user.find({
       where: {
         // nickName: Like(`%${query.nickName}%`),
