@@ -10,8 +10,8 @@ import envConfig from './config/envConfig'
 import { ConfigModule, ConfigService } from '@nestjs/config' // ConfigService是
 import { JwtAuthGuard } from './common/guard/jwt-auth.guard'
 import { APP_GUARD } from '@nestjs/core'
-import { RoleModule } from './modules/role/role.module';
-import { PermissionModule } from './modules/permission/permission.module';
+import { RoleModule } from './modules/role/role.module'
+import { PermissionModule } from './modules/permission/permission.module'
 
 @Module({
   imports: [

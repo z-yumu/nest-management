@@ -10,7 +10,7 @@ export class User extends BaseEntity  {
   @Column({unique: true})
   account: string
 
-  @Column({unique: true})
+  @Column({unique: true,name:'nick_name'})
   nickName: string
   
   // 不返回password
