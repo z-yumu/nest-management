@@ -3,15 +3,21 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class Role extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id:number
-    
-    @Column({unique: true,name:'role_name'})
-    roleName: string
+  @PrimaryGeneratedColumn()
+  role_id: number
 
-    @Column()
-    description: string
+  @Column({ unique: true, name: 'role_name' })
+  roleName: string
 
-    @Column()
-    permissions: string
+  @Column()
+  description: string
+
+  @Column()
+  permissions: string
+
+  @Column()
+  state: number
+
+  @Column()
+  create_by: string
 }
