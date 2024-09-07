@@ -4,7 +4,7 @@ import { AuthGuard } from '@nestjs/passport'
 import { Observable } from 'rxjs'
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator'
 /**
- * Guard 类必须实现 CanActivate 接口，并实现 canActivate()
+ * The Guard class must implement the CanActivate interface and implement canActivated ()
  */
 
 @Injectable()
@@ -16,7 +16,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    // getAllAndOverride是
+    // getAllAndOverride:
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),

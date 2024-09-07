@@ -2,11 +2,11 @@ import { HttpException } from '@nestjs/common'
 import { ErrorCodeMap } from '../contants/error-code.contants'
 
 /**
- * Api业务异常均抛出该异常
+ * API business exceptions all throw this exception
  */
 export class ApiException extends HttpException {
   /**
-   * 业务类型错误代码，非Http code
+   * Business type error code, not HTTP code
    */
   private errorCode: number
 

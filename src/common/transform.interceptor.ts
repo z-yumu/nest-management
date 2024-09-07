@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
 import { IResponse } from './interface/response'
 
-// 请求成功统一返回格式
+// Request successful unified return format
 @Injectable()
 export class TransformInterceptor<T>
   implements NestInterceptor<T, IResponse<T>>
@@ -22,7 +22,7 @@ export class TransformInterceptor<T>
         return {
           data,
           code: 200,
-          message: '请求成功',
+          message: 'success',
         }
       }),
     )

@@ -11,7 +11,7 @@ function parseEnv(){
     const prodEnv = path.resolve('.env.prod')
 
     if(!fs.existsSync(devEnv) && !fs.existsSync(prodEnv)) throw new Error('env file not found')
-        // existsSync是判断文件是否存在
+        // existsSync:It is to determine whether the file exists
         const filePath = isProd && fs.existsSync(prodEnv) ? prodEnv : devEnv
         return {path: filePath}
 }

@@ -24,11 +24,11 @@ import * as session from 'express-session'
     .setTitle('yum-docs')
     .setDescription('apis-document')
     .setVersion('1')
-    .addBearerAuth() // 添加认证
+    .addBearerAuth() // Add authentication
     .build()
   const document = SwaggerModule.createDocument(app, options)
   SwaggerModule.setup('/api-docs', app, document)
-  // 版本将在请求的 URI 中传递（默认）
+  // Version will be passed in the requested URI (default)
   // app.enableVersioning({
   //   type: VersioningType.URI,
   // })
@@ -37,11 +37,11 @@ import * as session from 'express-session'
   app.useStaticAssets(join(__dirname, 'images'), {
     prefix: '/xiaoyu',
   })
-  app.useGlobalFilters(new HttpExceptionFilter()) // 异常返回格式
-  app.useGlobalInterceptors(new TransformInterceptor()) // 成功返回格式
+  app.useGlobalFilters(new HttpExceptionFilter()) // Exception return format
+  app.useGlobalInterceptors(new TransformInterceptor()) // Successfully returned format
   app.useGlobalPipes(
     new ValidationPipe({
-      transform: true, // 开启转换
+      transform: true, 
     }),
   )
   await app.listen(8848)
